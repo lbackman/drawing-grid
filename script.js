@@ -1,24 +1,46 @@
-// What the code should do
-
-/*
-
-addEventListener that fires when page is fully loaded and then execute:
-    create div with class "square"
-    append it 256 (16*16) times to the #container div.
-
-addEventListener when mouseover grid-squares:
-    change color to black
-
-*/
-const grid = document.querySelector('#grid');
-
-addEventListener('DOMContentLoaded', function() {
+const grid = document.getElementById('grid');
+let mouseDownId = -1;
+document.addEventListener('DOMContentLoaded', function() {
     
-    for (let i = 0; i < (16) ** 2; i++) {
+    for (let i = 0; i < (50) ** 2; i++) {
         const div = document.createElement('div');
         div.classList.add(`square-${i+1}`);
         grid.appendChild(div);
+        
     }
+}); 
 
-});
 
+function draw() {
+    
+    const eventList = ['mouseenter', 'mouseleave'];
+    
+    for (entry of eventList) {
+        const squares = document.querySelectorAll('#grid > div');
+        squares.forEach(square => {
+            square.addEventListener(entry, function() { 
+                square.classList.add('filled');
+            });  
+        });   
+    }
+    
+}
+function stopDraw() {
+    
+    const eventList = ['mouseenter', 'mouseleave'];
+    
+    for (entry of eventList) {
+        const squares = document.querySelectorAll('#grid > div');
+        squares.forEach(square => {
+            square.removeEventListener(entry, function() {
+                square.classList.add('filled');
+            });  
+        });   
+    }
+    
+}
+
+
+grid.addEventListener('mousedown', draw);
+grid.addEventListener('mouseup', stopDraw);
+grid.addEventListener('mouseout', stopDraw);
