@@ -3,7 +3,7 @@ let isMouseDown = false;
 
 buildGrid(16);
 
-//let squares = grid.getElementsByClassName('square');
+startDraw();
 
 const clearBtn = document.getElementById('clear');
 const changeBtn = document.getElementById('change');
@@ -93,4 +93,3 @@ function startDraw () {
     grid.onmouseup = disableDraw;
     grid.onmouseleave = disableDraw;
 }
-startDraw();
