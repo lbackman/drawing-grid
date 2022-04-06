@@ -13,22 +13,24 @@ clearBtn.addEventListener('click', clearGrid);
 
 changeBtn.addEventListener('click', function() {
     const newSize = (prompt("Enter new grid size (1-100):"));
-    if (newSize === null) alert('Canceled resizing');
+    if (!newSize) alert('Canceled resizing');
     else {
         const n = parseInt(newSize);
+        //only characters allowed:0-9 & . & , & - (minus)
         if ( /^[0-9.,-]+$/.test(n)) {
             clearGrid();
             removeSquares(grid);
             switch(true) {
-                case (n>=100):
-                    buildGrid(100);
-                    break;
-                case (n>0 && n<100):
-                    buildGrid(n);
-                    break;
-                default:
-                    alert('Default grid size: 16x16');
-                    buildGrid(16);
+              case (n>=100):
+                alert('Maximum grid size: 100x100');
+                buildGrid(100);
+                break;
+              case (n>0 && n<100):
+                buildGrid(n);
+                break;
+              default:
+                alert('Minimum grid size: 1x1');
+                buildGrid(1);
             }
             
         } else {
