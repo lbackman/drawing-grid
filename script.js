@@ -23,17 +23,15 @@ changeBtn.addEventListener('click', function() {
               case (n>100):
                 alert('Maximum grid size: 100x100');
                 buildGrid(100);
-                startDraw();
                 break;
               case (n>0 && n<=100):
                 buildGrid(n);
-                startDraw();
                 break;
               default:
                 alert('Minimum grid size: 1x1');
                 buildGrid(1);
-                startDraw();
             }
+            startDraw();
             
         } else {
             alert('Give integer input')
