@@ -47,7 +47,7 @@ function removeSquares(parent) {
 
 function buildGrid(n) {
     const m = parseInt(n);
-    
+    //add the given amount of rows and columns
     grid.style.gridTemplateColumns = `repeat(${m}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${m}, 1fr)`;
     for (let i = 0; i < (m) ** 2; i++) {
