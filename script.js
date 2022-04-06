@@ -3,12 +3,45 @@
 // have the user choose new grid size and then build it.
 const grid = document.getElementById('grid');
 const clearBtn = document.getElementById('clear');
+const changeBtn = document.getElementById('change');
 
 document.addEventListener('DOMContentLoaded', function () {
-    buildGrid(70);
+    buildGrid(16);
 }); 
 
 clearBtn.addEventListener('click', clearGrid);
+
+changeBtn.addEventListener('click', function() {
+    const newSize = (prompt("Enter new grid size (1-100):"));
+    if (newSize === null) alert('Canceled resizing');
+    else {
+        const n = parseInt(newSize);
+        if ( /^[0-9.,-]+$/.test(n)) {
+            clearGrid();
+            removeSquares(grid);
+            switch(true) {
+                case (n>=100):
+                    buildGrid(100);
+                    break;
+                case (n>0 && n<100):
+                    buildGrid(n);
+                    break;
+                default:
+                    alert('Default grid size: 16x16');
+                    buildGrid(16);
+            }
+            
+        } else {
+            alert('Give integer input')
+        }
+    }
+});
+
+function removeSquares(parent) {
+    while(parent.firstChild) {
+        parent.removeChild(parent.lastChild);
+    }
+}
 
 function buildGrid(n) {
     const m = parseInt(n);

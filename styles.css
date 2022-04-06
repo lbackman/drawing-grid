@@ -38,12 +38,13 @@ div[class^='square']:hover {
 }
 
 #btn-container {
-    max-width: 250px;
+    max-width: 300px;
     margin: 2ch 0 0 2ch;
     display: flex;
-
+    justify-content: space-between;
 }
 
 button {
     flex: 1;
+    max-width: 125px;
 }
