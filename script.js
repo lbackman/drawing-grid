@@ -2,10 +2,13 @@
 // Build 16x16 grid by default, then when reset button is pressed
 // have the user choose new grid size and then build it.
 const grid = document.getElementById('grid');
+const clearBtn = document.getElementById('clear');
 
 document.addEventListener('DOMContentLoaded', function () {
-    buildGrid(60);
+    buildGrid(70);
 }); 
+
+clearBtn.addEventListener('click', clearGrid);
 
 function buildGrid(n) {
     const m = parseInt(n);
@@ -17,6 +20,12 @@ function buildGrid(n) {
         div.classList.add(`square-${i+1}`);
         grid.appendChild(div);
     }
+}
+function clearGrid() {
+    const squares = document.querySelectorAll('#grid > div');
+        squares.forEach(square => {  
+            square.classList.remove('filled');   
+        });   
 }
 
 function draw() {

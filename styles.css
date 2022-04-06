@@ -36,3 +36,14 @@ div[class^='square']:hover {
 .filled {
     background-color: black;
 }
+
+#btn-container {
+    max-width: 250px;
+    margin: 2ch 0 0 2ch;
+    display: flex;
+
+}
+
+button {
+    flex: 1;
+}
