@@ -1,15 +1,23 @@
+// reset-btn branch
+// Build 16x16 grid by default, then when reset button is pressed
+// have the user choose new grid size and then build it.
 const grid = document.getElementById('grid');
-let mouseDownId = -1;
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
+    buildGrid(60);
+}); 
+
+function buildGrid(n) {
+    const m = parseInt(n);
     
-    for (let i = 0; i < (50) ** 2; i++) {
+    grid.style.gridTemplateColumns = `repeat(${m}, 1fr)`;
+    grid.style.gridTemplateRows = `repeat(${m}, 1fr)`;
+    for (let i = 0; i < (m) ** 2; i++) {
         const div = document.createElement('div');
         div.classList.add(`square-${i+1}`);
         grid.appendChild(div);
-        
     }
-}); 
-
+}
 
 function draw() {
     

@@ -14,12 +14,13 @@ h1 {
     margin: 1ch 0 0 1ch;
 }
 
+/* grid-template-column/row is set to 16 * 1fr by default */
 #grid {
     display: grid;
     max-width: 740px;
     border: 2px solid black;
-    grid-template-columns: repeat(50, 1fr);
-    grid-template-rows: repeat(50, 1fr);
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
     margin: 2ch 0 0 2ch;
 }
 
