@@ -18,17 +18,19 @@ h1 {
     display: grid;
     max-width: 740px;
     border: 2px solid black;
-    grid-template-columns: repeat(50, 1fr);
-    grid-template-rows: repeat(50, 1fr);
+    grid-template-columns: repeat(100, 1fr);
+    grid-template-rows: repeat(100, 1fr);
     margin: 2ch 0 0 2ch;
+    user-select: none;
 }
 
-div[class^='square'] {
+.square {
     /*border: 1px dashed black;*/
     width: 100%;
     padding-bottom: 100%;
+    user-select: none;
 }
-div[class^='square']:hover {
+.square:hover {
     background-color: rgba(0, 0, 0, 0.282);
 }
 

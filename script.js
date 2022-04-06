@@ -1,46 +1,44 @@
 const grid = document.getElementById('grid');
-let mouseDownId = -1;
-document.addEventListener('DOMContentLoaded', function() {
+let isMouseDown = false;
+
+for (let i = 0; i < (100) ** 2; i++) {
+    const div = document.createElement('div');
+    div.classList.add('square');
+    grid.appendChild(div);
     
-    for (let i = 0; i < (50) ** 2; i++) {
-        const div = document.createElement('div');
-        div.classList.add(`square-${i+1}`);
-        grid.appendChild(div);
+}
+
+const squares = grid.getElementsByClassName('square');
+
+function enableDraw(e) {
+    isMouseDown = true;
+
+    if (e.target !== grid) {
+        draw(e);
+    }
+}
+
+function disableDraw() {
+    isMouseDown = false;
+}
+
+function draw(e) {
+    if (isMouseDown === false) {
+        return;
+    } 
+
+    e.target.classList.add('filled');
+}
+
+function startDraw () {
+    grid.onmousedown = enableDraw;
+
+    for (let i = 0, il = squares.length; i< il ;i++) {
+        squares[i].onmouseenter = draw;
         
     }
-}); 
-
-
-function draw() {
     
-    const eventList = ['mouseenter', 'mouseleave'];
-    
-    for (entry of eventList) {
-        const squares = document.querySelectorAll('#grid > div');
-        squares.forEach(square => {
-            square.addEventListener(entry, function() { 
-                square.classList.add('filled');
-            });  
-        });   
-    }
-    
+    grid.onmouseup = disableDraw;
+    grid.onmouseleave = disableDraw;
 }
-function stopDraw() {
-    
-    const eventList = ['mouseenter', 'mouseleave'];
-    
-    for (entry of eventList) {
-        const squares = document.querySelectorAll('#grid > div');
-        squares.forEach(square => {
-            square.removeEventListener(entry, function() {
-                square.classList.add('filled');
-            });  
-        });   
-    }
-    
-}
-
-
-grid.addEventListener('mousedown', draw);
-grid.addEventListener('mouseup', stopDraw);
-grid.addEventListener('mouseout', stopDraw);
+startDraw();
