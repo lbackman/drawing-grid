@@ -87,7 +87,10 @@ function startDraw () {
     grid.onmousedown = enableDraw;
     const squares = grid.getElementsByClassName('square');
     for (let i = 0, il = squares.length; i< il ;i++) {
-        squares[i].onmouseenter = draw;
+        // squares[i].onmouseenter = draw; (leaving here if needed later)
+        // gray square is visible if not already on filled square
+        squares[i].onmouseleave = draw;
+        squares[i].onmouseup = draw;
     }
     
     grid.onmouseup = disableDraw;
