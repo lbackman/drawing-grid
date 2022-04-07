@@ -31,6 +31,7 @@ h1 {
     grid-template-rows: repeat(16, 1fr);
     margin-top: 1ch;
     user-select: none;
+    cursor: none;
 }
 
 .square {
@@ -39,7 +40,7 @@ h1 {
     user-select: none;
 }
 .square:hover {
-    background-color: rgba(0, 0, 0, 0.282);
+    background-color: rgba(0, 0, 0, 0.282) !important;
 }
 
 .square.filled {
