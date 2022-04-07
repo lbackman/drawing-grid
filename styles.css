@@ -56,3 +56,8 @@ h1 {
 button {
     flex: 0 1 125px;
 }
+
+.clicked {
+    background-color: #8797c853;
+    box-shadow: 5px 2px 5px rgb(214, 222, 214);
+}

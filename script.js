@@ -1,16 +1,43 @@
 const grid = document.getElementById('grid');
 let isMouseDown = false;
 let isRandom = false;
+let isErase = false;
 
 buildGrid(16);
 
 startDraw();
 
+const drawBtn = document.getElementById('draw');
 const clearBtn = document.getElementById('clear');
+const eraseBtn = document.getElementById('erase');
 const changeBtn = document.getElementById('change');
 const randBtn = document.getElementById('random');
 
+const buttons = document.querySelectorAll('.btn');
+drawBtn.classList.add('clicked');
+
+for (let i = 0; i < buttons.length; i++) {
+    let button = buttons[i];
+    button.addEventListener('click', function() {
+        buttons.forEach(function(item) {
+            item.classList.remove('clicked');
+        });
+        button.classList.add('clicked');
+    });
+}
+
+drawBtn.addEventListener('click', () => {
+    isRandom = false;
+    isErase = false;
+    randBtn.textContent = 'Random color';
+})
+
 clearBtn.addEventListener('click', clearGrid);
+
+eraseBtn.addEventListener('click', () => {
+    isErase = true;
+    isRandom = false;
+});
 
 changeBtn.addEventListener('click', function() {
     const newSize = (prompt("Enter new grid size (1-100):"));
@@ -42,13 +69,8 @@ changeBtn.addEventListener('click', function() {
 });
 
 randBtn.addEventListener('click', () => {
-    if (randBtn.textContent === 'Random color') {
-        isRandom = true;
-        randBtn.textContent = 'Black';
-    } else {
-        isRandom = false;
-        randBtn.textContent = 'Random color';
-    }
+    isRandom = true;
+    isErase = false;
 });
 
 function removeSquares(parent) {
@@ -70,7 +92,11 @@ function buildGrid(n) {
 }
 function clearGrid() {
     isRandom = false;
-    randBtn.textContent = 'Random color'
+    isErase = false;
+    buttons.forEach(function(item) {
+        item.classList.remove('clicked');
+    });
+    drawBtn.classList.add('clicked');
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
         square.classList.remove('filled', 'random');
@@ -99,11 +125,16 @@ function draw(e) {
     if (isMouseDown === false) {
         return;
     } 
+
     if (isRandom === true) {
         e.target.classList.remove('filled');
         e.target.style.backgroundColor = 
           `rgb(${random()},${random()},${random()})`;
         
+    } else if (isErase === true){
+        e.target.classList.remove('filled');
+        e.target.removeAttribute('style');
+
     } else {
         e.target.removeAttribute('style');
         e.target.classList.add('filled');
