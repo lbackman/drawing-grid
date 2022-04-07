@@ -70,6 +70,7 @@ function buildGrid(n) {
 }
 function clearGrid() {
     isRandom = false;
+    randBtn.textContent = 'Random color'
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
         square.classList.remove('filled', 'random');
