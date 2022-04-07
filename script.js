@@ -1,8 +1,6 @@
 const grid = document.getElementById('grid');
 let isMouseDown = false;
-let isRandom = true;
-
-
+let isRandom = false;
 
 buildGrid(16);
 
@@ -10,6 +8,7 @@ startDraw();
 
 const clearBtn = document.getElementById('clear');
 const changeBtn = document.getElementById('change');
+const randBtn = document.getElementById('random');
 
 clearBtn.addEventListener('click', clearGrid);
 
@@ -42,6 +41,16 @@ changeBtn.addEventListener('click', function() {
     }
 });
 
+randBtn.addEventListener('click', () => {
+    if (randBtn.textContent === 'Random color') {
+        isRandom = true;
+        randBtn.textContent = 'Black';
+    } else {
+        isRandom = false;
+        randBtn.textContent = 'Random color';
+    }
+});
+
 function removeSquares(parent) {
     while(parent.firstChild) {
         parent.removeChild(parent.lastChild);
@@ -60,10 +69,11 @@ function buildGrid(n) {
     }
 }
 function clearGrid() {
+    isRandom = false;
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
         square.classList.remove('filled', 'random');
-        square.style.backgroundColor = null;
+        square.removeAttribute('style');
     });   
 }
 
@@ -89,10 +99,12 @@ function draw(e) {
         return;
     } 
     if (isRandom === true) {
-       e.target.style.backgroundColor = 
-        `rgb(${random()},${random()},${random()})`;
+        e.target.classList.remove('filled');
+        e.target.style.backgroundColor = 
+          `rgb(${random()},${random()},${random()})`;
         
     } else {
+        e.target.removeAttribute('style');
         e.target.classList.add('filled');
     }
 }
@@ -101,10 +113,9 @@ function startDraw () {
     grid.onmousedown = enableDraw;
     const squares = grid.getElementsByClassName('square');
     for (let i = 0, il = squares.length; i< il ;i++) {
-        // squares[i].onmouseenter = draw; (leaving here if needed later)
+        squares[i].onmouseenter = draw;
         // gray square is visible if not already on filled square
         squares[i].onmouseleave = draw;
-        squares[i].onmouseup = draw;
     }
     
     grid.onmouseup = disableDraw;
