@@ -1,5 +1,8 @@
 const grid = document.getElementById('grid');
 let isMouseDown = false;
+let isRandom = true;
+
+
 
 buildGrid(16);
 
@@ -59,8 +62,14 @@ function buildGrid(n) {
 function clearGrid() {
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
-        square.classList.remove('filled');   
+        square.classList.remove('filled', 'random');
+        square.style.backgroundColor = null;
     });   
+}
+
+function random() {
+    const n = 256 * Math.random();
+    return Math.floor(n);
 }
 
 function enableDraw(e) {
@@ -79,8 +88,13 @@ function draw(e) {
     if (isMouseDown === false) {
         return;
     } 
-
-    e.target.classList.add('filled');
+    if (isRandom === true) {
+       e.target.style.backgroundColor = 
+        `rgb(${random()},${random()},${random()})`;
+        
+    } else {
+        e.target.classList.add('filled');
+    }
 }
 
 function startDraw () {
