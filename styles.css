@@ -47,6 +47,10 @@ h1 {
     background-color: black;
 }
 
+.square.gray {
+    background-color: hsl(0, 0%, 90%);
+}
+
 #btn-container {
     width: 740px;
     margin-top: 1ch;

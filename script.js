@@ -2,16 +2,19 @@ const grid = document.getElementById('grid');
 let isMouseDown = false;
 let isRandom = false;
 let isErase = false;
+let isGray = false;
 
 buildGrid(16);
 
 startDraw();
 
 const drawBtn = document.getElementById('draw');
-const clearBtn = document.getElementById('clear');
-const eraseBtn = document.getElementById('erase');
-const changeBtn = document.getElementById('change');
 const randBtn = document.getElementById('random');
+const grayBtn = document.getElementById('gray');
+const eraseBtn = document.getElementById('erase');
+const clearBtn = document.getElementById('clear');
+const changeBtn = document.getElementById('change');
+
 
 const buttons = document.querySelectorAll('.btn');
 drawBtn.classList.add('clicked');
@@ -29,15 +32,28 @@ for (let i = 0; i < buttons.length; i++) {
 drawBtn.addEventListener('click', () => {
     isRandom = false;
     isErase = false;
-    randBtn.textContent = 'Random color';
+    isGray = false;
 })
 
-clearBtn.addEventListener('click', clearGrid);
+randBtn.addEventListener('click', () => {
+    isRandom = true;
+    isErase = false;
+    isGray = false;
+});
 
 eraseBtn.addEventListener('click', () => {
     isErase = true;
     isRandom = false;
+    isGray = false;
 });
+
+grayBtn.addEventListener('click', () => {
+    isGray = true;
+    isRandom = false;
+    isErase = false;
+});
+
+clearBtn.addEventListener('click', clearGrid);
 
 changeBtn.addEventListener('click', function() {
     const newSize = (prompt("Enter new grid size (1-100):"));
@@ -68,10 +84,6 @@ changeBtn.addEventListener('click', function() {
     }
 });
 
-randBtn.addEventListener('click', () => {
-    isRandom = true;
-    isErase = false;
-});
 
 function removeSquares(parent) {
     while(parent.firstChild) {
@@ -93,13 +105,14 @@ function buildGrid(n) {
 function clearGrid() {
     isRandom = false;
     isErase = false;
+    isGray = false;
     buttons.forEach(function(item) {
         item.classList.remove('clicked');
     });
     drawBtn.classList.add('clicked');
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
-        square.classList.remove('filled', 'random');
+        square.classList.remove('filled', 'gray');
         square.removeAttribute('style');
     });   
 }
@@ -127,16 +140,21 @@ function draw(e) {
     } 
 
     if (isRandom === true) {
-        e.target.classList.remove('filled');
+        e.target.classList.remove('filled', 'gray');
         e.target.style.backgroundColor = 
           `rgb(${random()},${random()},${random()})`;
         
     } else if (isErase === true){
-        e.target.classList.remove('filled');
+        e.target.classList.remove('filled', 'gray');
         e.target.removeAttribute('style');
 
+    } else if (isGray === true) {
+        e.target.classList.remove('filled');
+        e.target.removeAttribute('style');
+        e.target.classList.add('gray');
     } else {
         e.target.removeAttribute('style');
+        e.target.classList.remove('gray');
         e.target.classList.add('filled');
     }
 }
