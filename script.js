@@ -181,7 +181,6 @@ function draw(e) {
                 const arr = toRGBArray(el.backgroundColor);
                 const hslArr = RGBToHSL(arr[0], arr[1], arr[2]);
                 const lightness = hslArr[2]
-                console.log(lightness);
                 if (lightness >= 10) {
                     const newLigtness = lightness - 10;
                     el.backgroundColor = `hsl(0, 0%, ${newLigtness}%)`
