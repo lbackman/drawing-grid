@@ -82,11 +82,16 @@ button {
 .drawing { 
     display: flex;
     justify-content: flex-start;
-    flex: 1;
+    flex: 3.2;
 }
 
 .erasing {
     display: flex;
     justify-content: flex-end;
-    flex: 1;
+    flex: 2;
+}
+
+.erasing button {
+    background-color: rgb(70, 61, 80);
+    color: white;
 }
