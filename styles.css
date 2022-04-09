@@ -31,7 +31,7 @@ h1 {
     grid-template-rows: repeat(16, 1fr);
     margin-top: 1ch;
     user-select: none;
-    cursor: none;
+    cursor: cell;
 }
 
 .square {
@@ -59,7 +59,7 @@ h1 {
 }
 
 button {
-    flex: 0 1 125px;
+    flex: 0 1 120px;
 }
 
 .clicked {
