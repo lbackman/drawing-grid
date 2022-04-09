@@ -10,14 +10,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>Drawing Grid</h1>
+        <h1>
+            <span class="first">Drawing</span> 
+            <span class="second">Grid</span>
+        </h1>
         <div id="btn-container">
-            <button id="draw" class="btn">Draw</button>
-            <button id="random" class="btn">Random color</button>
-            <button id="gray" class="btn">Gray-scale</button>
-            <button id="erase" class="btn">Erase</button>
-            <button id="clear">Clear grid</button>
-            <button id="change">Change grid size</button>
+            <div class="drawing">
+                <button id="draw" class="btn">Draw</button>
+                <button id="random" class="btn">Random color</button>
+                <button id="gray" class="btn">Gray-scale</button>
+                <button id="erase" class="btn">Erase</button>
+            </div>
+            <div class="erasing">
+                <button id="clear">Clear grid</button>
+                <button id="change">Change grid size</button>
+            </div>
         </div>
         <div id="grid"></div>
     </div>
