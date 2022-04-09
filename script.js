@@ -15,10 +15,11 @@ const eraseBtn = document.getElementById('erase');
 const clearBtn = document.getElementById('clear');
 const changeBtn = document.getElementById('change');
 
-
+// All buttons except clear grid and change grid
 const buttons = document.querySelectorAll('.btn');
 drawBtn.classList.add('clicked');
 
+// Marks currently selected button if it has class 'btn'
 for (let i = 0; i < buttons.length; i++) {
     let button = buttons[i];
     button.addEventListener('click', function() {
@@ -31,26 +32,26 @@ for (let i = 0; i < buttons.length; i++) {
 
 drawBtn.addEventListener('click', () => {
     isRandom = false;
-    isErase = false;
     isGray = false;
+    isErase = false;
 })
 
 randBtn.addEventListener('click', () => {
     isRandom = true;
+    isGray = false;
     isErase = false;
-    isGray = false;
-});
-
-eraseBtn.addEventListener('click', () => {
-    isErase = true;
-    isRandom = false;
-    isGray = false;
 });
 
 grayBtn.addEventListener('click', () => {
     isGray = true;
     isRandom = false;
     isErase = false;
+});
+
+eraseBtn.addEventListener('click', () => {
+    isRandom = false;
+    isGray = false;
+    isErase = true;
 });
 
 clearBtn.addEventListener('click', clearGrid);
@@ -103,13 +104,6 @@ function buildGrid(n) {
     }
 }
 function clearGrid() {
-    isRandom = false;
-    isErase = false;
-    isGray = false;
-    buttons.forEach(function(item) {
-        item.classList.remove('clicked');
-    });
-    drawBtn.classList.add('clicked');
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => {  
         square.classList.remove('filled', 'gray');
@@ -122,10 +116,35 @@ function random() {
     return Math.floor(n);
 }
 
+function toRGBArray(rgbStr) {
+    return rgbStr.match(/\d+/g).map(Number);
+}
+
+function RGBToHSL(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    const l = Math.max(r, g, b);
+    const s = l - Math.min(r, g, b);
+    const h = s
+      ? l === r
+        ? (g - b) / s
+        : l === g
+        ? 2 + (b - r) / s
+        : 4 + (r - g) / s
+      : 0;
+    return [
+      60 * h < 0 ? 60 * h + 360 : 60 * h,
+      100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+      (100 * (2 * l - s)) / 2,
+    ];
+}
+
 function enableDraw(e) {
     isMouseDown = true;
 
     if (e.target !== grid) {
+        // I.e., if the target is a square
         draw(e);
     }
 }
@@ -150,8 +169,29 @@ function draw(e) {
 
     } else if (isGray === true) {
         e.target.classList.remove('filled');
-        e.target.removeAttribute('style');
-        e.target.classList.add('gray');
+        if (!e.target.classList.contains('gray')) {
+            e.target.removeAttribute('style');
+            e.target.classList.add('gray');
+        } else {
+            if (!e.target.hasAttribute('style')) {
+                // Set background so its lightness can be decreased
+                e.target.style.backgroundColor = 'hsl(0, 0%, 80%)';
+            } else {
+                // Decrease lightness 10 %-age points each pass
+                const el = e.target.style;
+                const arr = toRGBArray(el.backgroundColor);
+                const hslArr = RGBToHSL(arr[0], arr[1], arr[2]);
+                const lightness = hslArr[2]
+                console.log(lightness);
+                if (lightness >= 10) {
+                    const newLigtness = lightness - 10;
+                    el.backgroundColor = `hsl(0, 0%, ${newLigtness}%)`
+                } else {
+                    return;
+                }
+            }
+        }
+        
     } else {
         e.target.removeAttribute('style');
         e.target.classList.remove('gray');
