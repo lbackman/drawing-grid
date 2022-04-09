@@ -171,7 +171,8 @@ function draw(e) {
             e.target.removeAttribute('style');
             e.target.classList.add('gray');
         } else {
-            if (!e.target.hasAttribute('style')) {
+            if ( !e.target.hasAttribute('style') ||
+                  !e.target.style.backgroundColor ) {
                 // Set background so its lightness can be decreased
                 e.target.style.backgroundColor = 'hsl(0, 0%, 80%)';
             } else {
