@@ -43,8 +43,8 @@ randBtn.addEventListener('click', () => {
 });
 
 grayBtn.addEventListener('click', () => {
-    isGray = true;
     isRandom = false;
+    isGray = true;
     isErase = false;
 });
 
@@ -157,17 +157,15 @@ function draw(e) {
     if (isMouseDown === false) {
         return;
     } 
+    switch(true) {
 
-    if (isRandom === true) {
+        case(isRandom):
         e.target.classList.remove('filled', 'gray');
         e.target.style.backgroundColor = 
           `rgb(${random()},${random()},${random()})`;
-        
-    } else if (isErase === true){
-        e.target.classList.remove('filled', 'gray');
-        e.target.removeAttribute('style');
+        break;
 
-    } else if (isGray === true) {
+        case(isGray):
         e.target.classList.remove('filled');
         if (!e.target.classList.contains('gray')) {
             e.target.removeAttribute('style');
@@ -191,8 +189,14 @@ function draw(e) {
                 }
             }
         }
-        
-    } else {
+        break;
+
+        case(isErase):
+        e.target.classList.remove('filled', 'gray');
+        e.target.removeAttribute('style');
+        break;
+
+        default: 
         e.target.removeAttribute('style');
         e.target.classList.remove('gray');
         e.target.classList.add('filled');
